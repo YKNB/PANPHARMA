@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pharmaops-api
+  namespace: pharmaops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pharmaops-api
+  template:
+    metadata:
+      labels:
+        app: pharmaops-api
+    spec:
+      containers:
+        - name: api
+          image: pharmaops-api:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: pharmaops-db-config
+            - secretRef:
+                name: pharmaops-db-secret
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pharmaops-api
+  namespace: pharmaops
+spec:
+  selector:
+    app: pharmaops-api
+  ports:
+    - port: 8080
+      targetPort: 8080

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pharmaops-db
+  namespace: pharmaops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pharmaops-db
+  template:
+    metadata:
+      labels:
+        app: pharmaops-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: pharmaops
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: pharmaops-db-secret
+                  key: DB_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pharmaops-db-secret
+                  key: DB_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pharmaops-db
+  namespace: pharmaops
+spec:
+  selector:
+    app: pharmaops-db
+  ports:
+    - port: 5432
+      targetPort: 5432

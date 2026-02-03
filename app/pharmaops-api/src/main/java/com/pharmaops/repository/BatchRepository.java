@@ -12,5 +12,7 @@ import org.springframework.data.domain.Pageable;
 public interface BatchRepository extends JpaRepository<Batch, UUID> {
     Optional<Batch> findByBatchNumber(String batchNumber);
     Page<Batch> findByStatus(BatchStatus status, Pageable pageable);
+    long countByStatus(BatchStatus status);
+
 
 }

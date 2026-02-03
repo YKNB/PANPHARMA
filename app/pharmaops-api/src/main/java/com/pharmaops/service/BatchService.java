@@ -4,6 +4,7 @@ import com.pharmaops.dto.CreateBatchRequest;
 import com.pharmaops.entity.Batch;
 import com.pharmaops.exception.ConflictException;
 import com.pharmaops.exception.NotFoundException;
+import com.pharmaops.metrics.BatchMetrics;
 import com.pharmaops.repository.BatchRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -19,9 +20,12 @@ public class BatchService {
 
     private final BatchRepository repo;
     private final AuditService auditService;
-    public BatchService(BatchRepository repo, AuditService auditService) {
+    private final BatchMetrics batchMetrics;
+
+    public BatchService(BatchRepository repo, AuditService auditService, BatchMetrics batchMetrics) {
         this.repo = repo;
         this.auditService = auditService;
+        this.batchMetrics = batchMetrics;
     }
 
     public Batch create(CreateBatchRequest req) {
@@ -36,6 +40,9 @@ public class BatchService {
         b.setStatus(BatchStatus.CREATED);
 
         Batch saved = repo.save(b);
+        batchMetrics.incrementCreated();
+        refreshBatchStatusGauges();
+
 
         auditService.record(
                 "CREATE_BATCH",
@@ -93,6 +100,9 @@ public class BatchService {
 
         batch.setStatus(newStatus);
         Batch saved = repo.save(batch);
+        batchMetrics.incrementStatusChange();
+        refreshBatchStatusGauges();
+
 
         auditService.record(
                 "UPDATE_BATCH_STATUS",
@@ -102,6 +112,15 @@ public class BatchService {
         );
 
         return saved;
+
     }
+
+    private void refreshBatchStatusGauges() {
+        for (BatchStatus s : BatchStatus.values()) {
+            int count = (int) repo.countByStatus(s);
+            batchMetrics.setCurrent(s, count);
+        }
+    }
+
 
 }
