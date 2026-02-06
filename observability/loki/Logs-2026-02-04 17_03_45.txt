@@ -1,0 +1,9 @@
+: "4 lines displayed"
+Total bytes processed: "7.47  kB"
+Common labels: {"app":"pharmaops-api","container":"api","filename":"/var/log/pods/pharmaops_pharmaops-api-7cbb4d7fcb-mbg52_38414351-065a-4376-ad0b-8cb2d202cc9a/api/7.log","job":"pharmaops/pharmaops-api","namespace":"pharmaops","node_name":"desktop-control-plane","pod":"pharmaops-api-7cbb4d7fcb-mbg52","stream":"stdout"}
+
+
+1770220547120	2026-02-04T15:55:47.120Z	Hibernate: select ae1_0.id,ae1_0.actor,ae1_0.created_at,ae1_0.entity_id,ae1_0.entity_type,ae1_0.event_type,ae1_0.payload,ae1_0.request_id from audit_events ae1_0 order by ae1_0.created_at desc offset ? rows fetch first ? rows only
+1770220547120	2026-02-04T15:55:47.120Z	2026-02-04T15:55:47.119Z DEBUG 1 --- [pharmaops-api] [nio-8080-exec-5] org.hibernate.SQL                        : select ae1_0.id,ae1_0.actor,ae1_0.created_at,ae1_0.entity_id,ae1_0.entity_type,ae1_0.event_type,ae1_0.payload,ae1_0.request_id from audit_events ae1_0 order by ae1_0.created_at desc offset ? rows fetch first ? rows only
+1770220545062	2026-02-04T15:55:45.062Z	Hibernate: select ae1_0.id,ae1_0.actor,ae1_0.created_at,ae1_0.entity_id,ae1_0.entity_type,ae1_0.event_type,ae1_0.payload,ae1_0.request_id from audit_events ae1_0 order by ae1_0.created_at desc offset ? rows fetch first ? rows only
+1770220545061	2026-02-04T15:55:45.061Z	2026-02-04T15:55:45.061Z DEBUG 1 --- [pharmaops-api] [nio-8080-exec-8] org.hibernate.SQL                        : select ae1_0.id,ae1_0.actor,ae1_0.created_at,ae1_0.entity_id,ae1_0.entity_type,ae1_0.event_type,ae1_0.payload,ae1_0.request_id from audit_events ae1_0 order by ae1_0.created_at desc offset ? rows fetch first ? rows only

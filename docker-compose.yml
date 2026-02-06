@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16
+    container_name: pharmaops-db
+    environment:
+      POSTGRES_DB: pharmaops
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pharmaops_db:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: ./app/pharmaops-api
+      dockerfile: Dockerfile
+    container_name: pharmaops-api
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_NAME: pharmaops
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+    ports:
+      - "8080:8080"
+
+volumes:
+  pharmaops_db:

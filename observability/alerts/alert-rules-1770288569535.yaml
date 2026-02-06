@@ -1,0 +1,66 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: Ops
+      folder: PharmaOps
+      interval: 1m
+      rules:
+        - uid: efcbfsr3h62o0b
+          title: Alerte PharmaOps
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 600
+                to: 0
+              datasourceUid: prometheus
+              model:
+                editorMode: code
+                expr: "(sum(rate(http_server_requests_seconds_count{namespace=\"pharmaops\",pod=~\"pharmaops-api.*\",status=~\"5..\"}[5m]))\r\n/sum(rate(http_server_requests_seconds_count{namespace=\"pharmaops\",pod=~\"pharmaops-api.*\"}[5m]))\r\n)\r\n"
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0.01
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: 3ce828d7-f1f2-42be-b5e6-7a05eaa7aa2a
+          panelId: 2
+          noDataState: NoData
+          execErrState: Error
+          for: 5m
+          annotations:
+            __dashboardUid__: 3ce828d7-f1f2-42be-b5e6-7a05eaa7aa2a
+            __panelId__: "2"
+            PharmaOps API error rate above 1%: "The PharmaOps API is returning more than 1% of HTTP 5xx errors over the last 5 minutes.\n\n\U0001F50E Open related logs in Grafana (Loki):\nhttp://localhost:3000/explore?orgId=1&left={\"datasource\":\"Loki\",\"queries\":[{\"expr\":\"{namespace=\\\"pharmaops\\\",pod=~\\\"pharmaops-api.*\\\"} |= \\\"ERROR\\\"\",\"refId\":\"A\"}],\"range\":{\"from\":\"now-15m\",\"to\":\"now\"}}\n\nAction:\n- Check application logs\n- Identify failing endpoints\n- Correlate with recent deployments or DB activity"
+          labels:
+            service: pharmaops-api
+            severity: warning
+            team: ops
+          isPaused: false
+          notification_settings:
+            receiver: grafana-default-email

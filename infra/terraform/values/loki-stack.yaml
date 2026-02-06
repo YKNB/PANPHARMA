@@ -1,0 +1,10 @@
+loki:
+  enabled: true
+  image:
+    tag: "2.9.8"   # <- ton fix (important)
+
+promtail:
+  enabled: true
+
+grafana:
+  enabled: false   # on a déjà grafana dans kube-prometheus-stack
