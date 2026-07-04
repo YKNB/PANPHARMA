@@ -14,7 +14,6 @@ Ce repository sert de lab DevOps complet autour d'une application Java :
 
 Les commandes et l'execution des scripts PowerShell sont detaillees dans `instruction.txt`. Consulter ce fichier avant de lancer les scripts du dossier `scripts/`, notamment pour l'ExecutionPolicy PowerShell, le port-forward Grafana, les tokens Grafana, les alertes et le serveur MCP.
 
-Le README est rédigé comme un tutoriel de reprise : il permet de lancer le projet en local, de le déployer sur Kubernetes, puis d'activer toute la stack observability.
 
 ---
 
