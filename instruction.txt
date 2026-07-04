@@ -313,7 +313,7 @@ SAST Semgrep
 SCA Trivy filesystem
 Build image Docker
 SCA Trivy image
-SCA Docker Scout image
+SCA Docker Scout sur les dependances Maven de l'image API
 Push Docker Hub vers karl123/pharmaops-api
 ```
 

@@ -7,12 +7,8 @@ COPY src ./src
 RUN mvn -q -DskipTests package
 
 # ---------- Run stage ----------
-FROM eclipse-temurin:21-jre
+FROM gcr.io/distroless/java21-debian12:nonroot
 WORKDIR /app
-
-# user non-root (propre)
-RUN useradd -m appuser
-USER appuser
 
 COPY --from=build /app/target/*.jar app.jar
 

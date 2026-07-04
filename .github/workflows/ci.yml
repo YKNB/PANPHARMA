@@ -167,6 +167,7 @@ jobs:
           command: cves
           image: local://${{ env.IMAGE_REPOSITORY }}:${{ github.sha }}
           only-severities: critical,high
+          only-package-types: maven
           only-fixed: true
           sarif-file: docker-scout.sarif
           write-comment: false

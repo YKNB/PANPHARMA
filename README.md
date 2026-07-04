@@ -1130,7 +1130,7 @@ Le repository contient une pipeline CI DevSecOps pour automatiser :
 6. SCA filesystem avec Trivy
 7. build image Docker
 8. SCA image avec Trivy
-9. SCA image avec Docker Scout
+9. SCA Maven de l'image API avec Docker Scout
 10. push image Docker Hub vers `karl123/pharmaops-api`
 
 Images publiees sur Docker Hub :
