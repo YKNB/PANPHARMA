@@ -19,6 +19,7 @@ Le README est rédigé comme un tutoriel de reprise : il permet de lancer le pro
 ---
 
 ## Architecture
+<img width="1536" height="1024" alt="architecture_complète" src="https://github.com/user-attachments/assets/b9ae0945-dc7a-4e4f-af4c-6dc15f6317ad" />
 
 
 ### Composants
