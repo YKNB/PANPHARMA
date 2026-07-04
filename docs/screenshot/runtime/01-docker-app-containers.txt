@@ -1,0 +1,7 @@
+﻿panpharma-mcp-grafana                                                                                                             grafana/mcp-grafana            Up 2 hours   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+k8s_api_pharmaops-api-86b4d86fbc-v6cj8_pharmaops_b5635023-e48e-4244-aeeb-481ea2752abc_1                                           2db3b414ad20                   Up 7 hours   
+k8s_postgres_pharmaops-db-64d6b98c85-xb7kl_pharmaops_f9fea583-a660-4b89-a15a-fecce947fe6c_0                                       6e9bbed548cc                   Up 7 hours   
+k8s_POD_pharmaops-api-86b4d86fbc-v6cj8_pharmaops_b5635023-e48e-4244-aeeb-481ea2752abc_0                                           registry.k8s.io/pause:3.10.2   Up 7 hours   
+k8s_POD_pharmaops-db-64d6b98c85-xb7kl_pharmaops_f9fea583-a660-4b89-a15a-fecce947fe6c_0                                            registry.k8s.io/pause:3.10.2   Up 7 hours   
+pharmaops-api                                                                                                                     panpharma-api                  Up 7 hours   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+pharmaops-db                                                                                                                      postgres:16                    Up 7 hours   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp

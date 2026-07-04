@@ -2,15 +2,27 @@ grafana:
   enabled: true
   adminPassword: admin
 
-  datasources:
-    datasources.yaml:
-      apiVersion: 1
-      datasources:
-        - name: Prometheus
-          type: prometheus
-          url: http://monitoring-kube-prometheus-prometheus:9090
-          access: proxy
-          isDefault: true
+  image:
+    tag: "12.3.1"
+
+  livenessProbe:
+    initialDelaySeconds: 1200
+    timeoutSeconds: 30
+    periodSeconds: 10
+    failureThreshold: 10
+
+  readinessProbe:
+    initialDelaySeconds: 300
+    timeoutSeconds: 10
+    periodSeconds: 10
+    failureThreshold: 30
+
+  additionalDataSources:
+    - name: Loki
+      uid: loki
+      type: loki
+      url: http://loki.loki.svc.cluster.local:3100
+      access: proxy
 
 prometheus:
   prometheusSpec:
@@ -19,3 +31,9 @@ prometheus:
 
 alertmanager:
   enabled: true
+
+nodeExporter:
+  enabled: false
+
+prometheus-node-exporter:
+  enabled: false

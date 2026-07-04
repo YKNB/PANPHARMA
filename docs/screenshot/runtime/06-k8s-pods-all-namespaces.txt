@@ -1,0 +1,19 @@
+﻿NAMESPACE     NAME                                                     READY   STATUS    RESTARTS        AGE
+kube-system   coredns-589f44dc88-8xqlb                                 1/1     Running   0               7h37m
+kube-system   coredns-589f44dc88-xj6tn                                 1/1     Running   0               7h37m
+kube-system   etcd-docker-desktop                                      1/1     Running   0               7h38m
+kube-system   kube-apiserver-docker-desktop                            1/1     Running   0               7h37m
+kube-system   kube-controller-manager-docker-desktop                   1/1     Running   2 (7h37m ago)   7h38m
+kube-system   kube-proxy-xclcr                                         1/1     Running   0               7h37m
+kube-system   kube-scheduler-docker-desktop                            1/1     Running   6 (5h22m ago)   7h38m
+kube-system   storage-provisioner                                      1/1     Running   9 (142m ago)    7h37m
+kube-system   vpnkit-controller                                        1/1     Running   0               7h37m
+loki          loki-0                                                   1/1     Running   0               6h42m
+loki          loki-promtail-zkbv6                                      1/1     Running   0               6h42m
+monitoring    alertmanager-monitoring-kube-prometheus-alertmanager-0   2/2     Running   0               6h42m
+monitoring    monitoring-grafana-655bcb6f5d-wksr6                      3/3     Running   1 (4h52m ago)   4h59m
+monitoring    monitoring-kube-prometheus-operator-b54dfcffc-htr4l      1/1     Running   0               6h44m
+monitoring    monitoring-kube-state-metrics-559db896bf-6j47n           1/1     Running   1 (6h39m ago)   6h44m
+monitoring    prometheus-monitoring-kube-prometheus-prometheus-0       2/2     Running   0               6h42m
+pharmaops     pharmaops-api-86b4d86fbc-v6cj8                           1/1     Running   1 (6h51m ago)   6h52m
+pharmaops     pharmaops-db-64d6b98c85-xb7kl                            1/1     Running   0               6h52m

@@ -1,0 +1,23 @@
+.env
+.env.*
+*.token
+*token*.txt
+
+# Local builds and IDE files
+target/
+.idea/
+
+# Terraform local state
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Local Kubernetes / Docker context exports
+kubeconfig
+*.kubeconfig
+docker-context*

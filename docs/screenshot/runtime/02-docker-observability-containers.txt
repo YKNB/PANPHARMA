@@ -1,0 +1,19 @@
+﻿panpharma-mcp-grafana                                                                                                             grafana/mcp-grafana            Up 2 hours   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+k8s_grafana_monitoring-grafana-655bcb6f5d-wksr6_monitoring_1e099737-46a6-4364-884e-dd07ca4e3807_1                                 2175aaa91c96                   Up 5 hours   
+k8s_grafana-sc-datasources_monitoring-grafana-655bcb6f5d-wksr6_monitoring_1e099737-46a6-4364-884e-dd07ca4e3807_0                  abb55b2165c6                   Up 5 hours   
+k8s_grafana-sc-dashboard_monitoring-grafana-655bcb6f5d-wksr6_monitoring_1e099737-46a6-4364-884e-dd07ca4e3807_0                    abb55b2165c6                   Up 5 hours   
+k8s_POD_monitoring-grafana-655bcb6f5d-wksr6_monitoring_1e099737-46a6-4364-884e-dd07ca4e3807_0                                     registry.k8s.io/pause:3.10.2   Up 5 hours   
+k8s_config-reloader_prometheus-monitoring-kube-prometheus-prometheus-0_monitoring_264466e9-edf1-4340-a080-7a8b308781ea_0          74550ba3e8bf                   Up 7 hours   
+k8s_prometheus_prometheus-monitoring-kube-prometheus-prometheus-0_monitoring_264466e9-edf1-4340-a080-7a8b308781ea_0               f3b6aae627d9                   Up 7 hours   
+k8s_config-reloader_alertmanager-monitoring-kube-prometheus-alertmanager-0_monitoring_f73c26d5-7fd6-49e7-8660-392c4f5fea5c_0      74550ba3e8bf                   Up 7 hours   
+k8s_alertmanager_alertmanager-monitoring-kube-prometheus-alertmanager-0_monitoring_f73c26d5-7fd6-49e7-8660-392c4f5fea5c_0         af26fbe4dd18                   Up 7 hours   
+k8s_kube-state-metrics_monitoring-kube-state-metrics-559db896bf-6j47n_monitoring_36ac5f81-b496-4de4-a023-824cbbcc3f5e_1           85108987d044                   Up 7 hours   
+k8s_loki_loki-0_loki_22d7738d-ec40-4375-9e15-bbcb67670d7d_0                                                                       8b5bd7748d0e                   Up 7 hours   
+k8s_promtail_loki-promtail-zkbv6_loki_aee9231f-46ad-47b0-b939-522a91fa4460_0                                                      65bfae480b57                   Up 7 hours   
+k8s_POD_alertmanager-monitoring-kube-prometheus-alertmanager-0_monitoring_f73c26d5-7fd6-49e7-8660-392c4f5fea5c_0                  registry.k8s.io/pause:3.10.2   Up 7 hours   
+k8s_POD_prometheus-monitoring-kube-prometheus-prometheus-0_monitoring_264466e9-edf1-4340-a080-7a8b308781ea_0                      registry.k8s.io/pause:3.10.2   Up 7 hours   
+k8s_POD_loki-0_loki_22d7738d-ec40-4375-9e15-bbcb67670d7d_0                                                                        registry.k8s.io/pause:3.10.2   Up 7 hours   
+k8s_POD_loki-promtail-zkbv6_loki_aee9231f-46ad-47b0-b939-522a91fa4460_0                                                           registry.k8s.io/pause:3.10.2   Up 7 hours   
+k8s_kube-prometheus-stack_monitoring-kube-prometheus-operator-b54dfcffc-htr4l_monitoring_96d2703d-964b-4bc6-a0f3-2157ed0dc641_0   7d9247d23514                   Up 7 hours   
+k8s_POD_monitoring-kube-prometheus-operator-b54dfcffc-htr4l_monitoring_96d2703d-964b-4bc6-a0f3-2157ed0dc641_0                     registry.k8s.io/pause:3.10.2   Up 7 hours   
+k8s_POD_monitoring-kube-state-metrics-559db896bf-6j47n_monitoring_36ac5f81-b496-4de4-a023-824cbbcc3f5e_0                          registry.k8s.io/pause:3.10.2   Up 7 hours   

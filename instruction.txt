@@ -1,0 +1,368 @@
+# Instructions d'execution des commandes et scripts PowerShell
+
+Ce fichier complete le README. Il sert de reference rapide pour executer les commandes et les scripts du lab PANPHARMA sur Windows avec PowerShell.
+
+## 1. Ouvrir PowerShell
+
+Ouvrir un terminal PowerShell depuis Windows Terminal, VS Code ou le menu Demarrer.
+
+Se placer a la racine du projet :
+
+```powershell
+cd C:\Users\karlo\workspace\repo\PANPHARMA
+```
+
+Verifier que le terminal est bien dans le repository :
+
+```powershell
+Get-Location
+Get-ChildItem
+```
+
+La sortie doit contenir notamment :
+
+```text
+README.md
+docker-compose.yml
+app
+infra
+helm
+observability
+scripts
+```
+
+## 2. Autoriser l'execution des scripts PowerShell
+
+Sur Windows, PowerShell peut bloquer les scripts `.ps1` selon la politique d'execution.
+
+Afficher la politique active :
+
+```powershell
+Get-ExecutionPolicy
+```
+
+Autoriser les scripts uniquement pour la session courante :
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+Cette commande ne modifie pas durablement la machine. Elle s'applique seulement au terminal PowerShell en cours.
+
+## 3. Syntaxe pour lancer un script local
+
+Depuis la racine du repository, un script local se lance avec `.\` :
+
+```powershell
+.\scripts\nom-du-script.ps1
+```
+
+Exemple :
+
+```powershell
+.\scripts\create-grafana-mcp-token.ps1
+```
+
+Ne pas lancer les scripts avec seulement leur nom :
+
+```powershell
+create-grafana-mcp-token.ps1
+```
+
+PowerShell demande le prefixe `.\` pour executer un fichier du dossier courant.
+
+## 4. Preparer Grafana
+
+Avant les scripts Grafana, Grafana doit etre accessible localement.
+
+Ouvrir un port-forward :
+
+```powershell
+kubectl port-forward -n monitoring svc/monitoring-grafana 3000:80
+```
+
+Garder ce terminal ouvert.
+
+Dans un deuxieme terminal PowerShell, verifier Grafana :
+
+```powershell
+Invoke-RestMethod http://localhost:3000/api/health
+```
+
+La reponse doit indiquer :
+
+```text
+database = ok
+```
+
+## 5. Creer le token Grafana
+
+Le token Grafana est necessaire pour les scripts qui appellent l'API Grafana ou le serveur MCP Grafana.
+
+Executer :
+
+```powershell
+.\scripts\create-grafana-mcp-token.ps1
+```
+
+Le token est enregistre hors du repository :
+
+```text
+C:\tmp\panpharma-grafana-mcp-token.txt
+```
+
+Ne pas commiter ce fichier.
+
+Alternative : definir le token dans une variable d'environnement :
+
+```powershell
+$env:GRAFANA_TOKEN = "coller-le-token-ici"
+```
+
+## 6. Appliquer les alertes Grafana
+
+Le script suivant cree ou met a jour les alertes Grafana du lab :
+
+```powershell
+.\scripts\apply-grafana-alerts.ps1 -GrafanaUrl "http://localhost:3000"
+```
+
+Il cree :
+
+```text
+Dossier Grafana : PANPHARMA Alerting
+Groupe de regles : panpharma-sre-alerts
+```
+
+Alertes creees :
+
+```text
+PANPHARMA API down
+PANPHARMA API target missing
+PANPHARMA API high 5xx rate
+PANPHARMA API pod restarted
+PANPHARMA API error logs detected
+PANPHARMA Prometheus down
+```
+
+Verifier dans Grafana :
+
+```text
+http://localhost:3000/alerting/list
+```
+
+## 7. Lancer le serveur MCP Grafana
+
+Le serveur MCP Grafana permet a un agent IA compatible MCP de communiquer avec Grafana.
+
+Charger le token Grafana dans la session PowerShell :
+
+```powershell
+$env:GRAFANA_SERVICE_ACCOUNT_TOKEN = Get-Content -Raw "C:\tmp\panpharma-grafana-mcp-token.txt"
+```
+
+Lancer le serveur MCP en arriere-plan :
+
+```powershell
+.\scripts\start-grafana-mcp.ps1 -Detached
+```
+
+Verifier le conteneur :
+
+```powershell
+docker ps --filter "name=panpharma-mcp-grafana"
+```
+
+Verifier le healthcheck :
+
+```powershell
+Invoke-WebRequest -Uri http://localhost:8000/healthz -UseBasicParsing
+```
+
+Endpoint MCP :
+
+```text
+http://localhost:8000/sse
+```
+
+Arreter le serveur MCP :
+
+```powershell
+docker stop panpharma-mcp-grafana
+```
+
+## 8. Commandes Docker Compose
+
+Lancer l'API et PostgreSQL en local :
+
+```powershell
+docker compose up --build -d
+```
+
+Verifier les conteneurs :
+
+```powershell
+docker compose ps
+```
+
+Arreter :
+
+```powershell
+docker compose down
+```
+
+Arreter et supprimer les volumes :
+
+```powershell
+docker compose down -v
+```
+
+## 9. Commandes Kubernetes utiles
+
+Verifier les pods applicatifs :
+
+```powershell
+kubectl get pods -n pharmaops
+```
+
+Verifier la stack monitoring :
+
+```powershell
+kubectl get pods -n monitoring
+```
+
+Verifier Loki et Promtail :
+
+```powershell
+kubectl get pods -n loki
+```
+
+Lire les logs de l'API :
+
+```powershell
+kubectl logs -n pharmaops deploy/pharmaops-api
+```
+
+Lire les logs PostgreSQL :
+
+```powershell
+kubectl logs -n pharmaops deploy/pharmaops-db
+```
+
+## 10. Commandes Helm utiles
+
+Installer ou mettre a jour Prometheus, Grafana et Alertmanager :
+
+```powershell
+helm upgrade --install monitoring ./helm/kube-prometheus-stack `
+  --namespace monitoring `
+  --create-namespace `
+  -f infra/terraform/values/kube-prometheus-stack.yaml
+```
+
+Installer ou mettre a jour Loki et Promtail :
+
+```powershell
+helm upgrade --install loki ./helm/loki `
+  --namespace loki `
+  --create-namespace `
+  -f infra/terraform/values/loki-stack.yaml
+```
+
+Lister les releases Helm :
+
+```powershell
+helm list -A
+```
+
+## 11. Ordre d'execution recommande
+
+Pour relancer le lab complet :
+
+```powershell
+docker build -t pharmaops-api:local ./app/pharmaops-api
+kubectl apply -f infra/k8s/pharmaops-api/
+helm upgrade --install monitoring ./helm/kube-prometheus-stack --namespace monitoring --create-namespace -f infra/terraform/values/kube-prometheus-stack.yaml
+helm upgrade --install loki ./helm/loki --namespace loki --create-namespace -f infra/terraform/values/loki-stack.yaml
+kubectl port-forward -n monitoring svc/monitoring-grafana 3000:80
+```
+
+Dans un deuxieme terminal :
+
+```powershell
+.\scripts\create-grafana-mcp-token.ps1
+.\scripts\apply-grafana-alerts.ps1 -GrafanaUrl "http://localhost:3000"
+$env:GRAFANA_SERVICE_ACCOUNT_TOKEN = Get-Content -Raw "C:\tmp\panpharma-grafana-mcp-token.txt"
+.\scripts\start-grafana-mcp.ps1 -Detached
+```
+
+## 12. Configurer la CI GitHub Actions
+
+Le workflow CI se trouve ici :
+
+```text
+.github/workflows/ci.yml
+```
+
+Il execute :
+
+```text
+Build Maven
+Tests Maven
+SAST Semgrep
+SCA Trivy filesystem
+Build image Docker
+SCA Trivy image
+SCA Docker Scout image
+Push Docker Hub vers karl123/pharmaops-api
+```
+
+Le push Docker Hub se fait uniquement lors d'un push sur la branche `main`.
+
+Image publiee :
+
+```text
+karl123/pharmaops-api:latest
+karl123/pharmaops-api:<commit-sha>
+```
+
+Secret GitHub Actions a creer dans le repository :
+
+```text
+DOCKERHUB_TOKEN
+```
+
+Dans GitHub :
+
+```text
+Repository
+-> Settings
+-> Secrets and variables
+-> Actions
+-> New repository secret
+```
+
+Le secret `DOCKERHUB_TOKEN` doit contenir un access token Docker Hub du compte `karl123` avec le droit de pousser l'image.
+
+Sur une Pull Request, la CI lance les builds et scans, mais ne pousse pas l'image.
+
+Sur `main`, la CI lance les builds, les scans, puis pousse :
+
+```text
+karl123/pharmaops-api:latest
+karl123/pharmaops-api:<commit-sha>
+```
+
+## 13. Notes Windows
+
+Sur Windows PowerShell, le caractere de continuation de ligne est le backtick :
+
+```powershell
+helm upgrade --install monitoring ./helm/kube-prometheus-stack `
+  --namespace monitoring `
+  --create-namespace
+```
+
+Dans Git Bash ou Linux/macOS, le caractere equivalent est `\`.
+
+Les commandes du README et de ce fichier sont ecrites pour PowerShell sur Windows.

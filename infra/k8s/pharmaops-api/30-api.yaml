@@ -42,9 +42,12 @@ kind: Service
 metadata:
   name: pharmaops-api
   namespace: pharmaops
+  labels:
+    app: pharmaops-api
 spec:
   selector:
     app: pharmaops-api
   ports:
-    - port: 8080
+    - name: http
+      port: 8080
       targetPort: 8080

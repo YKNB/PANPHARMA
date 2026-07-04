@@ -1,0 +1,3 @@
+﻿NAME                             READY   STATUS    RESTARTS        AGE     IP         NODE             NOMINATED NODE   READINESS GATES
+pharmaops-api-86b4d86fbc-v6cj8   1/1     Running   1 (6h51m ago)   6h52m   10.1.0.7   docker-desktop   <none>           <none>
+pharmaops-db-64d6b98c85-xb7kl    1/1     Running   0               6h52m   10.1.0.6   docker-desktop   <none>           <none>
