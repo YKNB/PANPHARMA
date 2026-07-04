@@ -12,7 +12,7 @@ Ce repository sert de lab DevOps complet autour d'une application Java :
 - Intégration MCP Grafana pour piloter Grafana depuis un agent IA compatible MCP
 - CI GitHub Actions
 
-Les commandes et l'execution des scripts PowerShell sont detaillees dans `instruction.txt`. Consulter ce fichier avant de lancer les scripts du dossier `scripts/`, notamment pour l'ExecutionPolicy PowerShell, le port-forward Grafana, les tokens Grafana, les alertes et le serveur MCP.
+Les commandes et l'exécution des scripts PowerShell sont détaillées dans `instruction.txt`. Consulter ce fichier avant de lancer les scripts du dossier `scripts/`, notamment pour l'ExecutionPolicy PowerShell, le port-forward Grafana, les tokens Grafana, les alertes et le serveur MCP.
 
 
 ---
